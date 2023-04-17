@@ -65,7 +65,7 @@ def create_animal() -> Animal:
         choice = menu('\n1 - Ввести комманду, которую животное умеет выполнять:\n2 - продолжить', ['1', '2'])
         if choice == '1':
             command = check_text('команду, которую животное умеет выполнять')
-            commands.append(command.strip())
+            commands.append(command)
     return Animal(name, birthdate, commands)
 
 
@@ -96,29 +96,28 @@ def show_base(animal_list: list):
         i += 1
 
 
-def view_animal(str_data) -> dict:
+def view_animal(animal: Animal) -> dict:
     '''
     Создает красивый словарь из данных о животном
     '''
-    category, animal_type, name, birthdate, commands = str_data.split(';')
-    data_dict = {'Категория': category,
-                 'Тип животного': animal_type,
-                 'Имя': name,
-                 'Дата рождения': birthdate,
-                 'Команды': commands}
+    data_dict = {'Категория': animal.category,
+                 'Тип животного': animal.animal_type,
+                 'Имя': animal.name,
+                 'Дата рождения': animal.birthdate,
+                 'Команды': animal.commands}
     return data_dict
 
 
-def write_to_file(animal_list: list, filename):
+def write_to_file(animal_list: list, filename: str):
     '''
     Записывает данные в файл
     '''
     with open(filename, 'w', encoding='utf-8') as file:
         for animal in animal_list:
-            file.write(animal + '\n')
+            file.write(animal.__str__() + '\n')
 
 
-def read_file(filename) -> list:
+def read_file(filename: str) -> list:
     '''
     Считывает данные из файла
     '''
@@ -126,5 +125,9 @@ def read_file(filename) -> list:
     with open(filename, 'r', encoding='utf-8') as file:
         for f in file:
             if f != [' ', '', '\n']:
-                animal_list.append(f.strip())
+                array = f.strip().split(';')
+                animal = Animal(array[2], array[3], array[4])
+                animal.category = array[0]
+                animal.animal_type = array[1]
+                animal_list.append(animal)
     return animal_list
