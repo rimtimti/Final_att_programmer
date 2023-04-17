@@ -10,29 +10,38 @@ class Animal:
 
 class Pet(Animal):
     category = 'Домашнее животное'
-
-
-class PackAnimal(Animal):
-    category = 'Вьючное  животное'
-
-
-class Dog(Pet):
-    animal_type = 'Собака'
-
+    animal_type = ''
+    
     def __str__(self):
         return f'{self.category};'\
                f'{self.animal_type};'\
                f'{super().__str__()}'
 
 
-class Cat(Dog):
+class PackAnimal(Animal):
+    category = 'Вьючное  животное'
+    animal_type = ''
+    
+    def __str__(self):
+        return f'{self.category};'\
+               f'{self.animal_type};'\
+               f'{super().__str__()}'
+
+class Dog(Pet):
+    animal_type = 'Собака'
+
+    def __str__(self):
+        return super().__str__()
+    
+
+class Cat(Pet):
     animal_type = 'Кошка'
 
     def __str__(self):
         return super().__str__()
 
 
-class Hamster(Dog):
+class Hamster(Pet):
     animal_type = 'Хомяк'
 
     def __str__(self):
@@ -43,19 +52,17 @@ class Horse(PackAnimal):
     animal_type = 'Лошадь'
 
     def __str__(self):
-        return f'{self.category};'\
-               f'{self.animal_type};'\
-               f'{super().__str__()}'
+        return super().__str__()
 
 
-class Camel(Horse):
+class Camel(PackAnimal):
     animal_type = 'Верблюд'
 
     def __str__(self):
         return super().__str__()
 
 
-class Donkey(Horse):
+class Donkey(PackAnimal):
     animal_type = 'Осел'
 
     def __str__(self):
